@@ -3,45 +3,10 @@
 > 100% Open Source · Zero Cost · Local Execution · Streams 100M+ Logs
 
 ---
-flowchart TD
+```markdown
+## 📊 Architecture Diagram
 
-A[Raw Logs (Any Format)]
-    --> B[Drain3 Templating]
-
-B --> C[DuckDB Streaming Storage]
-
-C --> D[Feature Engineering<br/>Entropy · Burstiness · Volatility · Time Delta · HTTP]
-
-D --> E[Feature Matrix (N × 393)]
-
-%% Phase 2
-E --> F[Autoencoder AE1<br/>Global Representation<br/>384 → 64 Latent]
-
-F --> G[Isolation Forest<br/>Point Anomaly Filter]
-
-G --> H[Normal Subset]
-
-H --> I[Autoencoder AE2<br/>Golden Baseline]
-
-I --> J{Reconstruction Error > Threshold?}
-
-J -->|Yes| K[ANOMALY]
-J -->|No| L[NORMAL]
-
-%% Phase 3
-K --> M[ChromaDB Knowledge Base]
-
-M --> N[KNN Label Propagation]
-
-M --> O[BM25 Retrieval]
-
-%% Phase 4
-N --> P[Hybrid Retrieval]
-O --> P
-
-P --> Q[Ollama LLM]
-
-Q --> R[Incident Report]
+See full diagram: [Architecture](flow_diagram.md)
 
 ## Architecture Overview
 
