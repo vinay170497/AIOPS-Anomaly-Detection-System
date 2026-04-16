@@ -3,10 +3,6 @@
 > 100% Open Source · Zero Cost · Local Execution · Streams 100M+ Logs
 
 ---
-```markdown
-## 📊 Architecture Diagram
-
-See full diagram: [Architecture](flow_diagram.md)
 
 ## Architecture Overview
 
