@@ -1,0 +1,32 @@
+# Step 1 — Install (once)
+pip install -r requirements.txt
+ollama serve              # separate terminal
+ollama pull deepseek-r1:8b
+
+# Step 2 — Run everything from scratch (single command)
+python main.py --mode all `
+    --big   data/log_files.csv `
+    --small data/logging_monitoring_anomalies.csv
+
+# Step 3 — Check results
+python main.py --mode status
+
+# Step 4 — Ask questions about your data
+python main.py --mode chat
+
+# Step 5 — Analyse future log batches (no retraining needed)
+python main.py --mode analyse --input data/new_logs.csv --query "What broke?"
+
+# Full suite (after --mode all completes)
+python evaluate.py
+
+# Fast (skip training tests, ~30 seconds)
+python evaluate.py --fast
+
+# Single suite
+python evaluate.py --suite feature
+python evaluate.py --suite multiformat
+python evaluate.py --suite feature,ingest,edge_cases
+
+# With tracebacks on failures
+python evaluate.py --verbose

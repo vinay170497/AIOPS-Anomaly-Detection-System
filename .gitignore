@@ -1,0 +1,17 @@
+# Secrets
+.env
+
+# Environments
+.venv/
+__pycache__/
+
+# Databases & Large Binary Files (RAG specific)
+chromadb_store/
+data/
+models/
+*.duckdb
+*.bin
+*.pkl
+
+# Logs
+*.log
