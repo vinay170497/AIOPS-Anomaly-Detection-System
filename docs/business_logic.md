@@ -1,70 +1,82 @@
-```markdown
-# 🧠 Business Logic — Log Intelligence & Anomaly Detection System
+# 🧠 Business Logic — AIOps Anomaly Detection System
+
+![ML](https://img.shields.io/badge/Machine%20Learning-Anomaly%20Detection-orange)
+![RAG](https://img.shields.io/badge/RAG-LLM%20Powered-green)
+![Pipeline](https://img.shields.io/badge/Pipeline-Streaming%20%26%20Batch-blue)
+![Status](https://img.shields.io/badge/System-Production%20Ready-success)
+
+---
 
 ## 📑 Table of Contents
 
-1. Objective
-2. System Phases Overview
-   - Phase 1 — Streaming Ingestion
-   - Phase 2 — Anomaly Sandwich Ensemble
-   - Phase 3 — Knowledge Base
-   - Phase 4 — RAG Analyst
-3. End-to-End Flow
-4. Key Design Principles
-5. Future Enhancements
+1. [Objective](#-objective)
+2. [System Phases Overview](#-system-phases-overview)
+   - [Phase 1 — Streaming Ingestion](#-phase-1--streaming-ingestion)
+   - [Phase 2 — Anomaly Sandwich Ensemble](#-phase-2--anomaly-sandwich-ensemble)
+   - [Phase 3 — Knowledge Base](#-phase-3--knowledge-base)
+   - [Phase 4 — RAG Analyst](#-phase-4--rag-analyst)
+3. [End-to-End Flow](#-end-to-end-flow)
+4. [Key Design Principles](#-key-design-principles)
+5. [Future Enhancements](#-future-enhancements)
 
 ---
 
 ## 🎯 Objective
 
-Design a scalable system that:
-- Ingests raw logs (any format)
-- Detects anomalies using a multi-stage ensemble
-- Builds a knowledge base of incidents
-- Generates human-readable incident reports using RAG + LLM
+Build a **scalable, intelligent AIOps system** capable of:
+
+- Processing logs from **any format and source**
+- Detecting anomalies using **multi-stage ML ensemble**
+- Persisting knowledge for **continuous learning**
+- Generating **human-readable incident reports** using LLMs
 
 ---
 
 ## 🧩 System Phases Overview
 
+---
+
 ### 🔹 Phase 1 — Streaming Ingestion
 
-**Goal:** Convert unstructured logs into structured feature vectors
+**Goal:** Transform unstructured logs into structured feature vectors
 
-**Process:**
-1. Accept raw logs (JSON, text, syslogs, etc.)
-2. Apply Drain3 templating to extract log patterns
-3. Stream logs into DuckDB (disk-backed storage)
-4. Perform feature engineering:
-   - Entropy
-   - Burstiness
-   - Volatility
-   - Time delta
-   - HTTP-specific features
+**Pipeline:**
+- Raw Logs → Drain3 → Structured Templates → DuckDB → Feature Engineering
+
+**Feature Signals:**
+- Entropy (randomness)
+- Burstiness (event spikes)
+- Volatility (pattern instability)
+- Time Delta (temporal gaps)
+- HTTP Signals (status, methods, failures)
 
 **Output:**
-Feature Matrix (N × 393)
+📊 Feature Matrix (N × 393)
 
 ---
 
 ### 🔹 Phase 2 — Anomaly Sandwich Ensemble
 
-**Goal:** Detect anomalies with high precision using layered models
+**Goal:** Achieve high-precision anomaly detection with layered filtering
 
-#### Step 1: Autoencoder (AE1)
-- Learns global representation
+#### 🧠 Stage 1 — Autoencoder (AE1)
+- Learns global data representation
 - Reduces dimensionality:
-  393 → 384 → 64
 
-#### Step 2: Isolation Forest
-- Filters point anomalies
-- Keeps only normal samples
+393 → 384 → 64 (latent space)
 
-#### Step 3: Autoencoder (AE2 - Golden Baseline)
+
+#### 🌲 Stage 2 — Isolation Forest
+- Removes obvious anomalies
+- Produces clean dataset
+
+#### 🧪 Stage 3 — Autoencoder (AE2 - Golden Baseline)
 - Trained only on normal data
-- Computes reconstruction error
+- Detects subtle anomalies
 
-#### Decision Logic
+#### ⚖️ Decision Logic
+
+
 IF reconstruction_error > threshold:
 LABEL = ANOMALY
 ELSE:
@@ -75,64 +87,80 @@ LABEL = NORMAL
 
 ### 🔹 Phase 3 — Knowledge Base
 
-**Goal:** Store and retrieve contextual anomaly information
+**Goal:** Provide contextual intelligence and memory
 
-**Components:**
-- ChromaDB (vector storage)
-- KNN Label Propagation
-- BM25 Retrieval
+**Core Components:**
+- 🧠 ChromaDB (vector database)
+- 🔗 KNN Label Propagation
+- 🔍 BM25 Keyword Retrieval
 
 **Capabilities:**
 - Store anomaly embeddings
 - Retrieve similar incidents
-- Improve labeling over time
+- Improve predictions over time
 
 ---
 
 ### 🔹 Phase 4 — RAG Analyst
 
-**Goal:** Generate explainable incident reports
+**Goal:** Convert anomalies into actionable insights
 
 **Pipeline:**
-1. Semantic search (vector similarity)
-2. BM25 keyword search
-3. Merge retrieved context
-4. Pass to LLM (Ollama)
-5. Generate:
-   - Root cause
-   - Severity
-   - Suggested actions
+1. Hybrid retrieval:
+   - Semantic (vector similarity)
+   - Keyword (BM25)
+2. Context aggregation
+3. LLM reasoning (Ollama)
+4. Report generation
 
-**Output:**
-Structured Incident Report
+**Generated Output:**
+- Root cause analysis
+- Severity classification
+- Suggested remediation steps
 
 ---
 
 ## 🔁 End-to-End Flow
 
-Raw Logs  
-→ Feature Engineering  
-→ AE1 → Isolation Forest → AE2  
-→ Anomaly Detection  
-→ Knowledge Base  
-→ RAG + LLM  
-→ Incident Report  
+Raw Logs
+↓
+Feature Engineering
+↓
+AE1 → Isolation Forest → AE2
+↓
+Anomaly Detection
+↓
+Knowledge Base
+↓
+RAG + LLM
+↓
+Incident Report
+
 
 ---
 
 ## ⚙️ Key Design Principles
 
-- Layered anomaly detection improves precision
-- Separation of representation and scoring
-- Hybrid retrieval avoids hallucination
-- Streaming design ensures scalability
-- Knowledge base enables continuous learning
+- 🧩 **Layered Detection**
+  Reduces false positives significantly
+
+- 🔍 **Separation of Concerns**
+  Representation ≠ anomaly scoring
+
+- 🔗 **Hybrid Retrieval**
+  Prevents hallucination in LLM outputs
+
+- ⚡ **Streaming First Design**
+  Enables scalability with minimal infra
+
+- 🧠 **Continuous Learning**
+  Knowledge base improves system over time
 
 ---
 
 ## 🚀 Future Enhancements
 
-- Kafka-based real-time streaming
-- Feedback-driven learning loop
-- Visualization dashboard
-- Alerting system integrations
+- Real-time streaming with Kafka
+- Human-in-the-loop feedback system
+- Observability dashboard
+- Alerting integrations (Slack, Email, Webhooks)
